@@ -59,7 +59,7 @@ func RefreshScreen() {
 	Buffer.AppendBytes([]byte("\x1b[2H"))
 	DrawRows()
 	cursorPosition := fmt.Sprintf("\x1b[%d;%dH", config.Cursor.Y+1, config.Cursor.X+1)
-    Buffer.AppendBytes([]byte(cursorPosition))
+	Buffer.AppendBytes([]byte(cursorPosition))
 	Buffer.AppendBytes([]byte("\x1b[H"))
 	Buffer.AppendBytes([]byte("\x1b[?25l"))
 	os.Stdout.Write(Buffer.Bytes)

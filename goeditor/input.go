@@ -1,13 +1,11 @@
 package goeditor
 
 import (
-	"os"
-
 	"github.com/tebeka/atexit"
 )
 
-func CtrlKey(c rune) rune {
-	return c & 0x1f
+func CtrlKey(k rune) rune {
+	return k & 0x1f
 }
 
 func MoveCursor(key rune) {
@@ -27,18 +25,22 @@ func MoveCursor(key rune) {
 	}
 }
 
-func ProcessKeyPress() error {
-	char, err := ReadKey()
+func ProcessKeypress() {
+	c, err := ReadKey()
 	if err != nil {
-		return err
+		atexit.Fatalf("error: %s", err)
+		atexit.Exit(1)
 	}
-	switch char {
-	case CtrlKey('q'):
-		os.Stdout.Write([]byte("\x1b[2J"))
-		os.Stdout.Write([]byte("\x1b[H"))
+	if c == nil {
+		atexit.Fatalln("c is nil")
+		atexit.Exit(1)
+	}
+	switch *c {
+	case rune('q'):
+		RefreshScreen()
 		atexit.Exit(0)
 		break
+	case rune('w'), rune('s'), rune('a'), rune('d'):
+		MoveCursor(*c)
 	}
-	MoveCursor(char)
-	return nil
 }

@@ -1,2 +1,2 @@
 run:
-	go run . testfile.txt
+	go run .

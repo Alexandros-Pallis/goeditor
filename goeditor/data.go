@@ -21,4 +21,3 @@ type EditorConfig struct {
 }
 
 var config EditorConfig
-
